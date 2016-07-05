@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ws.senlin.dao.PostsMapper" >
+  <resultMap id="BaseResultMap" type="ws.senlin.pojo.Posts" >
+    <id column="posts_id" property="postsId" jdbcType="INTEGER" />
+    <result column="user_account" property="userAccount" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="posts_title" property="postsTitle" jdbcType="VARCHAR" />
+    <result column="posts_text" property="postsText" jdbcType="VARCHAR" />
+    <result column="posts_date" property="postsDate" jdbcType="TIMESTAMP" />
+    <result column="posts_floor" property="postsFloor" jdbcType="VARCHAR" />
+    <result column="posts_picture" property="postsPicture" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    posts_id, user_account, user_name, posts_title, posts_text, posts_date, posts_floor, 
+    posts_picture
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from posts
+    where posts_id = #{postsId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from posts
+    where posts_id = #{postsId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="ws.senlin.pojo.Posts" >
+    insert into posts (posts_id, user_account, user_name, 
+      posts_title, posts_text, posts_date, 
+      posts_floor, posts_picture)
+    values (#{postsId,jdbcType=INTEGER}, #{userAccount,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{postsTitle,jdbcType=VARCHAR}, #{postsText,jdbcType=VARCHAR}, #{postsDate,jdbcType=TIMESTAMP}, 
+      #{postsFloor,jdbcType=VARCHAR}, #{postsPicture,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="ws.senlin.pojo.Posts" >
+    insert into posts
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="postsId != null" >
+        posts_id,
+      </if>
+      <if test="userAccount != null" >
+        user_account,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="postsTitle != null" >
+        posts_title,
+      </if>
+      <if test="postsText != null" >
+        posts_text,
+      </if>
+      <if test="postsDate != null" >
+        posts_date,
+      </if>
+      <if test="postsFloor != null" >
+        posts_floor,
+      </if>
+      <if test="postsPicture != null" >
+        posts_picture,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="postsId != null" >
+        #{postsId,jdbcType=INTEGER},
+      </if>
+      <if test="userAccount != null" >
+        #{userAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="postsTitle != null" >
+        #{postsTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="postsText != null" >
+        #{postsText,jdbcType=VARCHAR},
+      </if>
+      <if test="postsDate != null" >
+        #{postsDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="postsFloor != null" >
+        #{postsFloor,jdbcType=VARCHAR},
+      </if>
+      <if test="postsPicture != null" >
+        #{postsPicture,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="ws.senlin.pojo.Posts" >
+    update posts
+    <set >
+      <if test="userAccount != null" >
+        user_account = #{userAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="postsTitle != null" >
+        posts_title = #{postsTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="postsText != null" >
+        posts_text = #{postsText,jdbcType=VARCHAR},
+      </if>
+      <if test="postsDate != null" >
+        posts_date = #{postsDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="postsFloor != null" >
+        posts_floor = #{postsFloor,jdbcType=VARCHAR},
+      </if>
+      <if test="postsPicture != null" >
+        posts_picture = #{postsPicture,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where posts_id = #{postsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="ws.senlin.pojo.Posts" >
+    update posts
+    set user_account = #{userAccount,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      posts_title = #{postsTitle,jdbcType=VARCHAR},
+      posts_text = #{postsText,jdbcType=VARCHAR},
+      posts_date = #{postsDate,jdbcType=TIMESTAMP},
+      posts_floor = #{postsFloor,jdbcType=VARCHAR},
+      posts_picture = #{postsPicture,jdbcType=VARCHAR}
+    where posts_id = #{postsId,jdbcType=INTEGER}
+  </update>
+</mapper>
