@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="ws.senlin.dao.UserMapper" >
-  <resultMap id="BaseResultMap" type="ws.senlin.pojo.User" >
+<mapper namespace="ws.senlin.dao.UserDAO" >
+  <resultMap id="BaseResultMap" type="ws.senlin.entity.User" >
     <id column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="user_account" property="userAccount" jdbcType="VARCHAR" />
     <result column="user_password" property="userPassword" jdbcType="VARCHAR" />
@@ -10,23 +10,23 @@
   <sql id="Base_Column_List" >
     user_id, user_account, user_password, user_level
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="loadUser" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from user
-    where user_id = #{userId,jdbcType=INTEGER}
+    where user_account = #{userAccount,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from user
     where user_id = #{userId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="ws.senlin.pojo.User" >
+  <insert id="insert" parameterType="ws.senlin.entity.User" >
     insert into user (user_id, user_account, user_password, 
       user_level)
     values (#{userId,jdbcType=INTEGER}, #{userAccount,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR}, 
       #{userLevel,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="ws.senlin.pojo.User" >
+  <insert id="insertSelective" parameterType="ws.senlin.entity.User" >
     insert into user
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="userId != null" >
@@ -57,7 +57,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="ws.senlin.pojo.User" >
+  <update id="updateByPrimaryKeySelective" parameterType="ws.senlin.entity.User" >
     update user
     <set >
       <if test="userAccount != null" >
@@ -72,7 +72,7 @@
     </set>
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="ws.senlin.pojo.User" >
+  <update id="updateByPrimaryKey" parameterType="ws.senlin.entity.User" >
     update user
     set user_account = #{userAccount,jdbcType=VARCHAR},
       user_password = #{userPassword,jdbcType=VARCHAR},

@@ -22,7 +22,7 @@ public class User {
     }
 
     public void setUserAccount(String userAccount) {
-        this.userAccount = userAccount;
+        this.userAccount = userAccount == null ? null : userAccount.trim();
     }
 
     public String getUserPassword() {
@@ -30,7 +30,7 @@ public class User {
     }
 
     public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
+        this.userPassword = userPassword == null ? null : userPassword.trim();
     }
 
     public String getUserLevel() {
@@ -38,6 +38,6 @@ public class User {
     }
 
     public void setUserLevel(String userLevel) {
-        this.userLevel = userLevel;
+        this.userLevel = userLevel == null ? null : userLevel.trim();
     }
 }

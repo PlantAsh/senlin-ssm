@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="ws.senlin.dao.UserCodeMapper" >
-  <resultMap id="BaseResultMap" type="ws.senlin.pojo.UserCode" >
+<mapper namespace="ws.senlin.dao.UserCodeDAO" >
+  <resultMap id="BaseResultMap" type="ws.senlin.entity.UserCode" >
     <id column="code_id" property="codeId" jdbcType="INTEGER" />
     <result column="code_level" property="codeLevel" jdbcType="VARCHAR" />
     <result column="code_name" property="codeName" jdbcType="VARCHAR" />
@@ -19,13 +19,13 @@
     delete from user_code
     where code_id = #{codeId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="ws.senlin.pojo.UserCode" >
+  <insert id="insert" parameterType="ws.senlin.entity.UserCode" >
     insert into user_code (code_id, code_level, code_name
       )
     values (#{codeId,jdbcType=INTEGER}, #{codeLevel,jdbcType=VARCHAR}, #{codeName,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="ws.senlin.pojo.UserCode" >
+  <insert id="insertSelective" parameterType="ws.senlin.entity.UserCode" >
     insert into user_code
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="codeId != null" >
@@ -50,7 +50,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="ws.senlin.pojo.UserCode" >
+  <update id="updateByPrimaryKeySelective" parameterType="ws.senlin.entity.UserCode" >
     update user_code
     <set >
       <if test="codeLevel != null" >
@@ -62,7 +62,7 @@
     </set>
     where code_id = #{codeId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="ws.senlin.pojo.UserCode" >
+  <update id="updateByPrimaryKey" parameterType="ws.senlin.entity.UserCode" >
     update user_code
     set code_level = #{codeLevel,jdbcType=VARCHAR},
       code_name = #{codeName,jdbcType=VARCHAR}

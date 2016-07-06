@@ -34,7 +34,7 @@ public class UserInformation {
     }
 
     public void setUserAccount(String userAccount) {
-        this.userAccount = userAccount;
+        this.userAccount = userAccount == null ? null : userAccount.trim();
     }
 
     public String getUserName() {
@@ -42,7 +42,7 @@ public class UserInformation {
     }
 
     public void setUserName(String userName) {
-        this.userName = userName;
+        this.userName = userName == null ? null : userName.trim();
     }
 
     public String getUserFloor() {
@@ -50,7 +50,7 @@ public class UserInformation {
     }
 
     public void setUserFloor(String userFloor) {
-        this.userFloor = userFloor;
+        this.userFloor = userFloor == null ? null : userFloor.trim();
     }
 
     public String getUserMajor() {
@@ -58,7 +58,7 @@ public class UserInformation {
     }
 
     public void setUserMajor(String userMajor) {
-        this.userMajor = userMajor;
+        this.userMajor = userMajor == null ? null : userMajor.trim();
     }
 
     public String getUserEmail() {
@@ -66,7 +66,7 @@ public class UserInformation {
     }
 
     public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
+        this.userEmail = userEmail == null ? null : userEmail.trim();
     }
 
     public String getUserTelephone() {
@@ -74,7 +74,7 @@ public class UserInformation {
     }
 
     public void setUserTelephone(String userTelephone) {
-        this.userTelephone = userTelephone;
+        this.userTelephone = userTelephone == null ? null : userTelephone.trim();
     }
 
     public String getUserBirthday() {
@@ -82,7 +82,7 @@ public class UserInformation {
     }
 
     public void setUserBirthday(String userBirthday) {
-        this.userBirthday = userBirthday;
+        this.userBirthday = userBirthday == null ? null : userBirthday.trim();
     }
 
     public String getUserIntro() {
@@ -90,7 +90,7 @@ public class UserInformation {
     }
 
     public void setUserIntro(String userIntro) {
-        this.userIntro = userIntro;
+        this.userIntro = userIntro == null ? null : userIntro.trim();
     }
 
     public String getUserPicture() {
@@ -98,6 +98,6 @@ public class UserInformation {
     }
 
     public void setUserPicture(String userPicture) {
-        this.userPicture = userPicture;
+        this.userPicture = userPicture == null ? null : userPicture.trim();
     }
 }

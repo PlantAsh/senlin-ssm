@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="ws.senlin.dao.UserInformationMapper" >
-  <resultMap id="BaseResultMap" type="ws.senlin.pojo.UserInformation" >
+<mapper namespace="ws.senlin.dao.UserInformationDAO" >
+  <resultMap id="BaseResultMap" type="ws.senlin.entity.UserInformation" >
     <id column="information_id" property="informationId" jdbcType="INTEGER" />
     <result column="user_account" property="userAccount" jdbcType="VARCHAR" />
     <result column="user_name" property="userName" jdbcType="VARCHAR" />
@@ -27,7 +27,7 @@
     delete from user_information
     where information_id = #{informationId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="ws.senlin.pojo.UserInformation" >
+  <insert id="insert" parameterType="ws.senlin.entity.UserInformation" >
     insert into user_information (information_id, user_account, user_name, 
       user_floor, user_major, user_email, 
       user_telephone, user_birthday, user_intro, 
@@ -37,7 +37,7 @@
       #{userTelephone,jdbcType=VARCHAR}, #{userBirthday,jdbcType=VARCHAR}, #{userIntro,jdbcType=VARCHAR}, 
       #{userPicture,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="ws.senlin.pojo.UserInformation" >
+  <insert id="insertSelective" parameterType="ws.senlin.entity.UserInformation" >
     insert into user_information
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="informationId != null" >
@@ -104,7 +104,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="ws.senlin.pojo.UserInformation" >
+  <update id="updateByPrimaryKeySelective" parameterType="ws.senlin.entity.UserInformation" >
     update user_information
     <set >
       <if test="userAccount != null" >
@@ -137,7 +137,7 @@
     </set>
     where information_id = #{informationId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="ws.senlin.pojo.UserInformation" >
+  <update id="updateByPrimaryKey" parameterType="ws.senlin.entity.UserInformation" >
     update user_information
     set user_account = #{userAccount,jdbcType=VARCHAR},
       user_name = #{userName,jdbcType=VARCHAR},

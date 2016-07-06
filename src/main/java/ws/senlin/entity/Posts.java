@@ -32,7 +32,7 @@ public class Posts {
     }
 
     public void setUserAccount(String userAccount) {
-        this.userAccount = userAccount;
+        this.userAccount = userAccount == null ? null : userAccount.trim();
     }
 
     public String getUserName() {
@@ -40,7 +40,7 @@ public class Posts {
     }
 
     public void setUserName(String userName) {
-        this.userName = userName;
+        this.userName = userName == null ? null : userName.trim();
     }
 
     public String getPostsTitle() {
@@ -48,7 +48,7 @@ public class Posts {
     }
 
     public void setPostsTitle(String postsTitle) {
-        this.postsTitle = postsTitle;
+        this.postsTitle = postsTitle == null ? null : postsTitle.trim();
     }
 
     public String getPostsText() {
@@ -56,7 +56,7 @@ public class Posts {
     }
 
     public void setPostsText(String postsText) {
-        this.postsText = postsText;
+        this.postsText = postsText == null ? null : postsText.trim();
     }
 
     public Date getPostsDate() {
@@ -72,7 +72,7 @@ public class Posts {
     }
 
     public void setPostsFloor(String postsFloor) {
-        this.postsFloor = postsFloor;
+        this.postsFloor = postsFloor == null ? null : postsFloor.trim();
     }
 
     public String getPostsPicture() {
@@ -80,6 +80,6 @@ public class Posts {
     }
 
     public void setPostsPicture(String postsPicture) {
-        this.postsPicture = postsPicture;
+        this.postsPicture = postsPicture == null ? null : postsPicture.trim();
     }
 }
