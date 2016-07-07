@@ -10,9 +10,8 @@
                         http://www.springframework.org/schema/mvc    
                         http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 
-    <mvc:default-servlet-handler/>
     <!-- 自动扫描该包，使SpringMVC认为包下用了@controller注解的类是控制器 -->  
-    <context:component-scan base-package="com.cn.hnust.controller" />  
+    <context:component-scan base-package="ws.senlin.controller" />  
     <!--避免IE执行AJAX时，返回JSON出现下载文件 -->  
     <bean id="mappingJacksonHttpMessageConverter"  
         class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">  
@@ -31,10 +30,20 @@
             </list>  
         </property>  
     </bean>  
+    
+    <mvc:annotation-driven />
+    <!-- 对静态资源访问-->
+    <mvc:default-servlet-handler/>
+    <!-- <mvc:resources location="/js/"  mapping="/js/**" />
+    <mvc:resources location="/assets/js/"  mapping="/js/**" />
+    <mvc:resources location="/assets/css/"  mapping="/styles/**" />
+    <mvc:resources location="/assets/i/"  mapping="/images/**" />
+    <mvc:resources location="/assets/fonts/"  mapping="/**" /> -->
+    
     <!-- 定义跳转的文件的前后缀 ，视图模式配置-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
         <!-- 这里的配置我的理解是自动给后面action的方法return的字符串加上前缀和后缀，变成一个 可用的url地址 -->  
-        <!-- <property name="prefix" value="" /> -->
+        <property name="prefix" value="/jsp/" />
         <property name="suffix" value=".jsp" />
     </bean>  
       

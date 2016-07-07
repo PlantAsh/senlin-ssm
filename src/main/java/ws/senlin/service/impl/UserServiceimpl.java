@@ -1,13 +1,8 @@
 package ws.senlin.service.impl;
 
-import java.util.Iterator;
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
-
-import com.opensymphony.xwork2.ActionContext;
 
 import ws.senlin.dao.UserDAO;
 import ws.senlin.dao.UserInformationDAO;
@@ -17,7 +12,6 @@ import ws.senlin.service.UserService;
 
 @Service("userService")
 public class UserServiceimpl implements UserService {
-
 	@Resource
 	private UserDAO userDAO;
 	
@@ -29,20 +23,19 @@ public class UserServiceimpl implements UserService {
 		try {
 			User us = new User();
 			us = userDAO.loadUser(user.getUserAccount());
-			if (!us.equals(null)) {
-				ActionContext.getContext().getSession().put("error", "账号已存在");
-				return "error";
+			if (us == null) {
+				userDAO.addSelective(user);
+				UserInformation usin = new UserInformation();
+				usin.setUserAccount(user.getUserAccount());
+				usin.setUserName(user.getUserAccount());
+				userInformationDAO.addSelective(usin);
+				return "success";
+			} else {
+				return "账号已存在";
 			}
-//			userDAO.addSelective(user);
-//			UserInformation usin = new UserInformation();
-//			usin.setUserAccount(user.getUserAccount());
-//			usin.setUserName(user.getUserAccount());
-//			userInformationDAO.add(usin);
-			return "success";
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			ActionContext.getContext().getSession().put("error", "未知错误");
-			return "error";
+			return "未知错误";
 		}
 	}
 
@@ -51,61 +44,11 @@ public class UserServiceimpl implements UserService {
 		try {
 			User us = new User();
 			us = userDAO.loadUser(user.getUserAccount());
-			if (us.equals(null)) {
-				ActionContext.getContext().getSession().put("error", "账号或密码错误");
-				return null;
-			}
-			
-			if(!us.getUserPassword().equals(user.getUserPassword())) {
-				ActionContext.getContext().getSession().put("error", "账号或密码错误");
-				us.setUserLevel("error");
-				return null;
-			}else if(us.getUserLevel().equals("1")) {
-				return us;
-			}else {
-				ActionContext.getContext().getSession().put("error", "账号或密码错误");
-				us.setUserLevel("error");
-				return null;
-			}
-			
+			return us;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
 			throw e;
 		}
 	}
-
-//	public UserInformation getInformation(UserInformation usin) throws Exception {
-//		// TODO Auto-generated method stub
-//		try {
-//			List<UserInformation> us = null;
-//			us = userInformationDAO.getInformation(usin.getUserAccount());
-//			UserInformation usin2 = new UserInformation();
-//			Iterator<UserInformation> iterator = us.iterator();
-//			usin2 = iterator.next();
-//			return usin2;
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			throw e;
-//		}
-//	}
-//
-//	public String updateInformation(UserInformation usin) throws Exception {
-//		try {
-//			List<UserInformation> us = null;
-//			us = userInformationDAO.getInformation(usin.getUserAccount());
-//			UserInformation usin2 = new UserInformation();
-//			Iterator<UserInformation> iterator = us.iterator();
-//			usin2 = iterator.next();
-//			usin.setInformationID(usin2.getInformationID());
-//			userInformationDAO.updateInformation(usin);
-//			return "success";
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			throw e;
-//		}
-//	}
 
 }

@@ -6,146 +6,94 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ActionSupport;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import ws.senlin.entity.User;
 import ws.senlin.entity.UserInformation;
+import ws.senlin.service.InformationService;
 import ws.senlin.service.UserService;
 
 @Controller
 @RequestMapping("/user")
-public class UserController extends ActionSupport {
-	private static final long serialVersionUID = -2266695172069461659L;
+@SessionAttributes({"UserAccount","userInformation"})
+public class UserController {
 	@Resource
 	private UserService userService;
+	@Resource
+	private InformationService informationService;
 	
-	private javax.servlet.http.HttpServletResponse response;
-	
-	private User userBean;
-	private UserInformation userinBean;
-	
-	@RequestMapping(value = "/login", method = RequestMethod.POST, produces = {
-    "application/json; charset=utf-8" })
-	public String Login() throws Exception {
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public String Login(HttpServletResponse response, ModelMap model, User user) throws Exception {
 		response.setContentType("text/html;charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
 		
 		try {
-			User user = new User();
-			user = this.getUserBean();
 			User us = userService.loadUser(user);
 			
 			if(us == null) {
-				out.print("<script>alert('" + ActionContext.getContext().getSession().get("error") + "')</script>");
+				out.print("<script>alert('" + "账号或密码错误" + "')</script>");
 				out.flush();
-				return "login";
-			}else {
-				String level = "level" + us.getUserLevel();
-				ActionContext.getContext().getSession().put("UserAccount", us.getUserAccount());
+				return "user/login";
+			} else if(!us.getUserPassword().equals(user.getUserPassword())) {
+				out.print("<script>alert('" + "账号或密码错误" + "')</script>");
+				out.flush();
+				return "user/login";
+			} else {
+				String level = "user_level" + us.getUserLevel();
+				model.addAttribute("UserAccount", us.getUserAccount());
 				UserInformation usin = new UserInformation();
 				usin.setUserAccount(us.getUserAccount());
-//				UserInformation usin2 = userService.getInformation(usin);
-//				ActionContext.getContext().getSession().put("userInformation", usin2);
-				return "login";
+				UserInformation usin2 = informationService.loadInformation(usin);
+				model.addAttribute("userInformation", usin2);
+				return "user/" + level;
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "login";
+		return "user/login";
 	}
 	
-	@RequestMapping(value = "/regist", method = RequestMethod.POST, produces = {
-    "application/json; charset=utf-8" })
-	public String Regist() throws Exception {
+	@RequestMapping(value = "/regist", method = RequestMethod.POST)
+	public String Regist(HttpServletResponse response, User userBean) throws Exception {
 		response.setContentType("text/html;charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
 		
 		try {
-			User user = new User();
-			user = this.getUserBean();
-			user.setUserLevel("1");
-			String us = userService.addUser(user);
+			userBean.setUserLevel("1");
+			String result = userService.addUser(userBean);
 			
-			if (us.equals("error")) {
-				out.print("<script>alert('" + ActionContext.getContext().getSession().get("error") + "')</script>");
+			if (!result.equals("success")) {
+				out.print("<script>alert('" + result + "')</script>");
 				out.flush();
-				return "regist";
-			}else if(us.equals("success")){
-				return "login";
+				return "user/regist";
+			}else {
+				return "user/login";
 			}
-			return "regist";
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return "regist";
+			return "user/regist";
 		}
 	}
 	
-//	@Action(value = "User_Cancel")
-//	public String Cancel() throws Exception {
-//		try {
-//			ActionContext.getContext().getSession().clear();
-//			return "login";
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			return "login";
-//		}
-//	}
-//
-//	@Action(value = "User_updateInformation")
-//	public String updateInformation() throws Exception {
-//		response.setContentType("text/html;charset=UTF-8");
-//        response.setCharacterEncoding("UTF-8");
-//        PrintWriter out = response.getWriter();
-//        
-//		try {
-//			UserInformation usin = new UserInformation();
-//			usin = this.getUserinBean();
-//			String userAccount = (String) ActionContext.getContext().getSession().get("UserAccount");
-//			usin.setUserAccount(userAccount);
-//			String usin2 = userService.updateInformation(usin);
-//			if(usin2.equals("error")) {
-//				out.print("<script>alert('" + ActionContext.getContext().getSession().get("error") + "')</script>");
-//				out.flush();
-//				return "information";
-//			}
-//			ActionContext.getContext().getSession().put("userInformation", usin);
-//			return "level1";
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			return "information";
-//		}
-//	}
-	
-	/*-------------------------------------------------------------------------------------------------------------
-	 * -----------------------------------------------------------------------------------------------------------*/
-	
-	public User getUserBean() {
-		return userBean;
-	}
-	public void setUserBean(User userBean) {
-		this.userBean = userBean;
-	}
-	
-	public UserInformation getUserinBean() {
-		return userinBean;
-	}
-	public void setUserinBean(UserInformation userinBean) {
-		this.userinBean = userinBean;
-	}
-
-	public void setServletResponse(HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		this.response = response;
+	@RequestMapping(value = "/cancel")
+	public String Cancel(ModelMap mode) throws Exception {
+		try {
+			mode.clear();
+//			model.addAttribute("UserAccount");
+//			model.addAttribute("userInformation");
+			return "user/login";
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "user/login";
+		}
 	}
 
 }

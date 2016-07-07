@@ -10,8 +10,10 @@
 <meta name="format-detection" content="telephone=no">
 <meta name="renderer" content="webkit">
 <meta http-equiv="Cache-Control" content="no-siteapp" />
-<link rel="alternate icon" type="image/png" href="assets/i/favicon.png">
-<link rel="stylesheet" href="assets/css/amazeui.min.css" />
+<link rel="alternate icon" type="image/png" href="${pageContext.request.contextPath}/assets/i/favicon.png">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/amazeui.min.css" />
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.3.min.js" ></script>
+<script type="text/javascript" src = "${pageContext.request.contextPath}/js/loginCheck.js"></script>
 <style>
 .header {
 	text-align: center;
@@ -28,29 +30,6 @@
 }
 </style>
 
-<script type="text/javascript">
-		function login() {
-			var account = document.manage.userAccount;
-			var password = document.manage.userPassword;
-			if(account.value == "") {
-				account.focus();
-				account.placeholder = "账号不能为空";
-				account.style.color = "Red";
-			}else if(password.value == "" || password.value.length > 20) {
-				password.focus();
-				password.placeholder = "密码不符合规格";
-				password.style.color = "Red";
-			}else {
-				manage.action = "${pageContext.request.contextPath}/user/login";
-				document.manage.submit();
-			}
-		}
-		function regist() {
-			manage.action = "regist.jsp";
-			document.manage.submit();
-		}
-</script>
-	
 </head>
 <body>
 
@@ -65,12 +44,14 @@
 <div class="am-g">
   <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">   
     
-    <form action="" name="manage" method="post" class="am-form">
+    <form action="" name="login" method="post" class="am-form">
       <label for="userAccount">账号:</label>
-      <input type="text" name="userBean.userAccount" id="userAccount" placeholder="请输入账号。" required/>
+      <input type="text" name="userAccount" id="userAccount" onBlur="checkUserAccount(this)" placeholder="请输入账号。"/>
+      <SPAN id="userAccount_notice" >*</SPAN>
       <br>
       <label for="userPassword">密码:</label>
-      <input type="password" name="userBean.userPassword" id="userPassword" placeholder="请输入密码。" required/>
+      <input type="password" name="userPassword" id="userPassword" onBlur="checkPassword(this)" placeholder="请输入密码。"/>
+      <SPAN id="userPassword_notice" >*</SPAN>
       <br>
       <label for="remember-me">
         <input id="remember-me" type="checkbox">
@@ -78,13 +59,13 @@
       </label>
       <br />
       <div class="am-cf">
-        <input type="button" onclick="login()" value="登 录" class="am-btn am-btn-primary am-btn-sm am-fl" style="float:left;"/>
+        <input type="button" onclick="ok()" name="login" value="登 录" class="am-btn am-btn-primary am-btn-sm am-fl" style="float:left;"/>
         <input type="button" onclick="regist()" value="注 册" class="am-btn am-btn-primary am-btn-sm am-fl"  style="float:left;margin-left:15px;"/>
         <input type="button" onclick="" value="忘记密码 " class="am-btn am-btn-default am-btn-sm am-fr"/>
       </div>
     </form>
     <hr>
-    <p><%@ include file="Frame_bottom.jsp"%></p>
+    <p><%@ include file="../frame/Frame_bottom.jsp"%></p>
   </div>
 </div>
 

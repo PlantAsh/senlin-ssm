@@ -17,11 +17,11 @@
     information_id, user_account, user_name, user_floor, user_major, user_email, user_telephone, 
     user_birthday, user_intro, user_picture
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="loadInformation" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from user_information
-    where information_id = #{informationId,jdbcType=INTEGER}
+    where user_account = #{userAccount,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from user_information
@@ -37,7 +37,7 @@
       #{userTelephone,jdbcType=VARCHAR}, #{userBirthday,jdbcType=VARCHAR}, #{userIntro,jdbcType=VARCHAR}, 
       #{userPicture,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="ws.senlin.entity.UserInformation" >
+  <insert id="addSelective" parameterType="ws.senlin.entity.UserInformation" >
     insert into user_information
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="informationId != null" >
@@ -104,7 +104,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="ws.senlin.entity.UserInformation" >
+  <update id="updateInformationSelective" parameterType="ws.senlin.entity.UserInformation" >
     update user_information
     <set >
       <if test="userAccount != null" >

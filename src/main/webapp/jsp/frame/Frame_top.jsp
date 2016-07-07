@@ -26,9 +26,12 @@ UserInformation usin = (UserInformation) session.getAttribute("userInformation")
           <span class="am-icon-users"></span> <%=usin.getUserName() %><span class="am-icon-caret-down"></span>
         </a>
         <ul class="am-dropdown-content">
-          <li><a href="UserInformation.jsp"><span class="am-icon-user"></span> 资料</a></li>
-          <li><a href="#"><span class="am-icon-cog"></span> 设置</a></li>
-          <li><a href="User_Cancel.action"><span class="am-icon-power-off"></span> 注销</a></li>
+          <li><a href="${pageContext.request.contextPath}/information/userinfo">
+          <span class="am-icon-user"></span> 资料</a>
+          </li>
+          <li><a href="${pageContext.request.contextPath}/user/cancel">
+          <span class="am-icon-power-off"></span> 注销</a>
+          </li>
         </ul>
       </li>
       <li class="am-hide-sm-only"><a href="javascript:;" id="admin-fullscreen"><span class="am-icon-arrows-alt"></span> <span class="admin-fullText">开启全屏</span></a></li>

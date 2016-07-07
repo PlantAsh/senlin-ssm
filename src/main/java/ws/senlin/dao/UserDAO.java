@@ -7,7 +7,7 @@ public interface UserDAO {
 
     int insert(User record);
 
-    int insertSelective(User record);
+    int addSelective(User record);
 
     User loadUser(String userAccount);
 

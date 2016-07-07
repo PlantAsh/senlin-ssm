@@ -44,13 +44,13 @@
         <async-supported>true</async-supported>  
     </servlet>  
     <servlet-mapping>  
-        <servlet-name>SpringMVC</servlet-name>  
-        <!-- 此处可以可以配置成*.do，对应struts的后缀习惯 -->  
-        <url-pattern>/</url-pattern>  
+        <servlet-name>SpringMVC</servlet-name>
+        <!-- 此处可以可以配置成*.do，对应struts的后缀习惯 -->
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
     
     <welcome-file-list>  
-        <welcome-file>/login.jsp</welcome-file>  
+        <welcome-file>jsp/user/login.jsp</welcome-file>  
     </welcome-file-list>  
   
 </web-app>

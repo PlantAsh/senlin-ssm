@@ -7,11 +7,11 @@ public interface UserInformationDAO {
 
     int insert(UserInformation record);
 
-    int insertSelective(UserInformation record);
+    int addSelective(UserInformation record);
 
-    UserInformation selectByPrimaryKey(Integer informationId);
+    UserInformation loadInformation(String userAccount);
 
-    int updateByPrimaryKeySelective(UserInformation record);
+    int updateInformationSelective(UserInformation record);
 
     int updateByPrimaryKey(UserInformation record);
 }
