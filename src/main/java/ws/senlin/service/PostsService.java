@@ -5,7 +5,7 @@ import java.util.List;
 import ws.senlin.entity.Posts;
 
 public interface PostsService {
-	public List<Posts> loadPosts(Posts userPosts, int first) throws Exception;
+	public List<Posts> loadPosts(Posts userPosts, int first, int number) throws Exception;
 	
 	public int getQuantity(Posts userPosts) throws Exception;
 	

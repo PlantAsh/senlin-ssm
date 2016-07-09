@@ -1,5 +1,7 @@
 package ws.senlin.dao;
 
+import java.util.List;
+
 import ws.senlin.entity.Posts;
 
 public interface PostsDAO {
@@ -9,7 +11,7 @@ public interface PostsDAO {
 
     int insertSelective(Posts record);
 
-    Posts selectByPrimaryKey(Integer postsId);
+    List<Posts> loadPosts(String postsFloor, int first, int number);
 
     int updateByPrimaryKeySelective(Posts record);
 

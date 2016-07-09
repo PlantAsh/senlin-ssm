@@ -46,11 +46,11 @@
     
     <form action="" name="login" method="post" class="am-form">
       <label for="userAccount">账号:</label>
-      <input type="text" name="userAccount" id="userAccount" onBlur="checkUserAccount(this)" placeholder="请输入账号。"/>
+      <input type="text" name="userAccount" id="userAccount" oninput="checkUserAccount(this)" placeholder="请输入账号。"/>
       <SPAN id="userAccount_notice" >*</SPAN>
       <br>
       <label for="userPassword">密码:</label>
-      <input type="password" name="userPassword" id="userPassword" onBlur="checkPassword(this)" placeholder="请输入密码。"/>
+      <input type="password" name="userPassword" id="userPassword" oninput="checkPassword(this)" placeholder="请输入密码。"/>
       <SPAN id="userPassword_notice" >*</SPAN>
       <br>
       <label for="remember-me">

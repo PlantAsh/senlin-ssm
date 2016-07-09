@@ -19,6 +19,9 @@
   <meta name="apple-mobile-web-app-title" content="Amaze UI" />
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/amazeui.min.css"/>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin.css">
+  <link href="${pageContext.request.contextPath}/js/upload/UploadPic.css" rel="stylesheet" type="text/css"> 
+  <script src="${pageContext.request.contextPath}/js/upload/jquery-2.2.1.js"></script>
+  <script src="${pageContext.request.contextPath}/js/upload/UploadPic.js"></script>
   <script src="${pageContext.request.contextPath}/assets/js/jquery.min.js"></script>
   <script src="${pageContext.request.contextPath}/assets/js/amazeui.min.js"></script>
   <script src="${pageContext.request.contextPath}/assets/js/app.js"></script>
@@ -51,12 +54,14 @@
       <hr/>
 
       <div class="am-g">
-        <div class="am-u-sm-12 am-u-md-4 am-u-md-push-8">
-
-        </div>
+      <form action="" name="Information" class="am-form am-form-horizontal" method="post" enctype="multipart/form-data" >
       
-        <div class="am-u-sm-12 am-u-md-8 am-u-md-pull-4">
-          <form action="" name="Information" class="am-form am-form-horizontal">
+        <div class="am-u-sm-12 am-u-md-4 am-u-md-push-8">
+          	<div id="UploadPic" Col="1" Row="1" Width="100" Height="100">
+          	</div>
+        </div>
+        
+        <div class="am-u-sm-12 am-u-md-8 am-u-md-pull-4">     
             <div class="am-form-group">
               <label for="userName" class="am-u-sm-3 am-form-label">姓名 / Name</label>
               <div class="am-u-sm-9">
@@ -158,8 +163,8 @@
                 <button type="button" onclick="OK()" class	="am-btn am-btn-primary">保存修改</button>
               </div>
             </div>
-          </form>
         </div>
+        </form>
       </div>
     </div>
 

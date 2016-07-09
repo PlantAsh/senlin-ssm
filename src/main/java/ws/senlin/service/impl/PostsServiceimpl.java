@@ -16,10 +16,10 @@ public class PostsServiceimpl implements PostsService {
 	@Resource
 	private PostsDAO postsDAO;
 
-	public List<Posts> loadPosts(Posts posts, int first) throws Exception {
+	public List<Posts> loadPosts(Posts posts, int first, int number) throws Exception {
 		try {
 			List<Posts> up = null;
-//			up = PostsDAO.loadPosts(posts, first);
+			up = postsDAO.loadPosts(posts.getPostsFloor(), first, number);
 			return up;
 		} catch (Exception e) {
 			// TODO: handle exception

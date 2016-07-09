@@ -34,7 +34,16 @@
 
         <div class="am-g am-intro-bd">
           <div class="am-intro-left am-u-sm-5">
-          <img src="http://s.amazeui.org/assets/2.x/i/cpts/intro/WP_Cortana_China.png" alt="小娜" /></div>
+          <% 
+          String image = null;
+          if(usin.getUserPicture() == null) {
+        	  image = "http://s.amazeui.org/media/i/demos/bw-2014-06-19.jpg?imageView/1/w/200/h/200/q/80";
+          } else {
+        	  image = usin.getUserPicture();
+          }
+          %>
+          <img src="${pageContext.request.contextPath}/<%=image %>"/>
+          </div>
           <div class="am-intro-right am-u-sm-7">
           <h2><%=usin.getUserName() %></h2>
           
@@ -69,6 +78,7 @@
           <p>手机：<%=usin.getUserTelephone() %></p>
           </div>
           <div class="am-u-sm-12 am-u-md-8 am-u-md-pull-4">
+          <hr data-am-widget="divider" style="" class="am-divider am-divider-default" />
              <h3>简介</h3>
              <% 
              String userIntro = null;

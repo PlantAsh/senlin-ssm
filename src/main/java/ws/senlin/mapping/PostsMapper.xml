@@ -15,11 +15,13 @@
     posts_id, user_account, user_name, posts_title, posts_text, posts_date, posts_floor, 
     posts_picture
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+  <select id="loadPosts" resultMap="BaseResultMap" >
+    select
     <include refid="Base_Column_List" />
     from posts
-    where posts_id = #{postsId,jdbcType=INTEGER}
+    where posts_floor = #{0}
+    order by posts_date desc
+    limit #{2},#{1}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from posts
