@@ -21,7 +21,19 @@
     from posts
     where posts_floor = #{0}
     order by posts_date desc
-    limit #{2},#{1}
+    limit #{1},#{2}
+  </select>
+  <select id="getPosts" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from posts
+    where posts_id = #{postsId,jdbcType=INTEGER}
+  </select>
+  <select id="getPage" resultType="int" parameterType="java.lang.String" >
+    select
+    count(*)
+    from posts
+    where posts_floor = #{postsFloor,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from posts
@@ -35,7 +47,7 @@
       #{postsTitle,jdbcType=VARCHAR}, #{postsText,jdbcType=VARCHAR}, #{postsDate,jdbcType=TIMESTAMP}, 
       #{postsFloor,jdbcType=VARCHAR}, #{postsPicture,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="ws.senlin.entity.Posts" >
+  <insert id="addSelective" parameterType="ws.senlin.entity.Posts" >
     insert into posts
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="postsId != null" >

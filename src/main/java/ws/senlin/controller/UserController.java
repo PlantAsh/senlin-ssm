@@ -35,11 +35,11 @@ public class UserController {
 			User us = userService.loadUser(user);
 			
 			if(us == null) {
-				out.print("<script>alert('" + "账号或密码错误" + "')</script>");
+				out.print("<script>alert('账号或密码错误')</script>");
 				out.flush();
 				return "user/login";
 			} else if(!us.getUserPassword().equals(user.getUserPassword())) {
-				out.print("<script>alert('" + "账号或密码错误" + "')</script>");
+				out.print("<script>alert('账号或密码错误')</script>");
 				out.flush();
 				return "user/login";
 			} else {

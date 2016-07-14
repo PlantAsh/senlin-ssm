@@ -42,7 +42,7 @@
         	  image = usin.getUserPicture();
           }
           %>
-          <img src="${pageContext.request.contextPath}/<%=image %>"/>
+          <img src="${pageContext.request.contextPath}/<%=image %>" class="am-img-thumbnail am-circle"/>
           </div>
           <div class="am-intro-right am-u-sm-7">
           <h2><%=usin.getUserName() %></h2>

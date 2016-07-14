@@ -14,15 +14,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="renderer" content="webkit">
   <meta http-equiv="Cache-Control" content="no-siteapp" />
-  <link rel="icon" type="image/png" href="assets/i/favicon.png">
-  <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
+  <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/assets/i/favicon.png">
+  <link rel="apple-touch-icon-precomposed" href="${pageContext.request.contextPath}/assets/i/app-icon72x72@2x.png">
   <meta name="apple-mobile-web-app-title" content="Amaze UI" />
-  <link rel="stylesheet" href="assets/css/amazeui.min.css"/>
-  <link rel="stylesheet" href="assets/css/admin.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/amazeui.min.css"/>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin.css">
   
   <script type="text/javascript">
   function cancle() {
-	  posts.action = "Floor.jsp";
+	  posts.action = "${pageContext.request.contextPath}/jsp/posts/Floor.jsp";
 	  document.posts.submit();
   }
   function Reply() {
@@ -31,7 +31,7 @@
 		  replyText.focus();
 		  alert("回复内容在1-100字符内。");
 	  }else {
-		  Post.action = "Posts_Reply.action";
+		  Post.action = "${pageContext.request.contextPath}/posts/replyPosts";
 		  document.Post.submit();
 	  }
   }
@@ -44,7 +44,7 @@
   <%@ include file="../frame/Frame_left.jsp"%>
   
   <%
-  Posts usp = (Posts) session.getAttribute("userPosts");
+  Posts usp = (Posts) session.getAttribute("Posts");
   %>
   
   <div class="admin-content">
@@ -54,7 +54,7 @@
         <div class="am-u-sm-12 am-u-md-3">
           <div class="am-input-group am-input-group-sm">
           <span class="am-input-group-btn">
-            <button class="am-btn am-btn-primary" type="button" onclick="cancle()">返回</button>
+            <button class="am-btn am-btn-default" type="button" onclick="cancle()">返回</button>
           </span>
           </div>
         </div>
@@ -72,29 +72,29 @@
         </div>
       
         <div class="am-u-sm-12 am-u-md-8 am-u-md-pull-4">
-          <form action="" name="Post" class="am-form am-form-horizontal">
+          <form action="" class="am-form am-form-horizontal">
             <div class="am-form-group">
               <div class="am-u-sm-9">
-                <strong><font size="10"><%=usp.getPostsTitle() %></font></strong>
+                <strong><font size="8"><%=usp.getPostsTitle() %></font></strong>
               </div>
             </div>
-
+            <hr data-am-widget="divider" style="" class="am-divider am-divider-default" />
             <div class="am-form-group">
               <div class="am-u-sm-9">
                 <small><font size="5"><%=usp.getPostsText() %></font></small>
               </div>
             </div>
-      
-            <hr/>
-            
+          </form>
+          <hr/>
+          <form action="" name="Post" method="post" class="am-form am-form-horizontal">
             <%
-            List ur=(List) session.getAttribute("userReply");
+            List ur=(List) session.getAttribute("postsReply");
             if(!ur.isEmpty()) { 
           	  for(int i=0; i<ur.size(); i++) {
           		  PostsReply ur2 = (PostsReply) ur.get(i);
             %>
             <div class="am-cf am-padding am-padding-bottom-0">
-              <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg"><%=ur2.getUserName() %></strong> <small>  <%=ur2.getReplyDate() %></small></div>
+              <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg"><%=ur2.getUserName() %></strong> <small>于<%=ur2.getReplyDate() %>回复</small></div>
             </div>
             <div class="am-form-group">
               <div class="am-u-sm-9">
@@ -109,7 +109,7 @@
             
             <div class="am-form-group">
               <div class="am-u-sm-9">
-                <textarea class="" rows="5" name="replyBean.replyText" id="replyText"></textarea>
+                <textarea class="" rows="5" name="replyText" id="replyText"></textarea>
               </div>
             </div>
             
@@ -132,14 +132,10 @@
 
 </div>
 
-<a href="#" class="am-icon-btn am-icon-th-list am-show-sm-only admin-menu" data-am-offcanvas="{target: '#admin-offcanvas'}"></a>
+<script src="${pageContext.request.contextPath}/assets/js/jquery.min.js"></script>
 
+<script src="${pageContext.request.contextPath}/assets/js/amazeui.min.js"></script>
 
-
-<script src="assets/js/jquery.min.js"></script>
-
-<script src="assets/js/amazeui.min.js"></script>
-
-<script src="assets/js/app.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/app.js"></script>
 </body>
 </html>

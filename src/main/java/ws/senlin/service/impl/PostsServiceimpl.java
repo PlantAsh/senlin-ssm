@@ -30,7 +30,7 @@ public class PostsServiceimpl implements PostsService {
 	public String addPosts(Posts posts) throws Exception {
 		// TODO Auto-generated method stub
 		try {
-//			PostsDAO.add(posts);
+			postsDAO.addSelective(posts);
 			return "success";
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -42,11 +42,10 @@ public class PostsServiceimpl implements PostsService {
 		// TODO Auto-generated method stub
 		try {
 			List<Posts> up = null;
-//			up = PostsDAO.getPosts(posts);
-//			if(up.isEmpty()) {
-//				ActionContext.getContext().getSession().put("error", "���ݿ����");
-//				return null;
-//			}
+			up = postsDAO.getPosts(posts.getPostsId());
+			if(up.isEmpty()) {
+				return null;
+			}
 			Iterator<Posts> iterator = up.iterator();
 			Posts usp = new Posts();
 			usp = iterator.next();
@@ -57,11 +56,11 @@ public class PostsServiceimpl implements PostsService {
 		}
 	}
 
-	public int getQuantity(Posts posts) throws Exception {
+	public int getPage(Posts posts) throws Exception {
 		// TODO Auto-generated method stub
 		try {
 			int up = 0;
-//			up = PostsDAO.getQuantity(posts);
+			up = postsDAO.getPage(posts.getPostsFloor());
 			return up;
 		} catch (Exception e) {
 			// TODO: handle exception

@@ -11,29 +11,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="renderer" content="webkit">
   <meta http-equiv="Cache-Control" content="no-siteapp" />
-  <link rel="icon" type="image/png" href="assets/i/favicon.png">
-  <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
+  <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/assets/i/favicon.png">
+  <link rel="apple-touch-icon-precomposed" href="${pageContext.request.contextPath}/assets/i/app-icon72x72@2x.png">
   <meta name="apple-mobile-web-app-title" content="Amaze UI" />
-  <link rel="stylesheet" href="assets/css/amazeui.min.css"/>
-  <link rel="stylesheet" href="assets/css/admin.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/amazeui.min.css"/>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin.css">
   
 <script type="text/javascript">
 function OK() {
 	var postsTitle = document.Post.postsTitle;
 	var postsText = document.Post.postsText;
-	if(postsTitle.value == "" || postsTitle.value.length > 50) {
+	if(postsTitle.value == "" || postsTitle.value.length > 20) {
 		postsTitle.focus();
-		alert("标题要在1-50字符内。");
+		alert("标题要在1-20字符内。");
 	}else if(postsText.value == "" || postsText.value.length > 500) {
 		postsText.focus();
 		alert("内容要在1-500字符内。");
 	}else {
-		Post.action = "Posts_addPosts.action";
+		Post.action = "${pageContext.request.contextPath}/posts/addPosts";
 		document.Post.submit();
 	}
 }
 function Cancel() {
-	Post.action = "Floor.jsp"
+	Post.action = "${pageContext.request.contextPath}/jsp/posts/Floor.jsp"
 	document.Post.submit();
 }
 </script>
@@ -55,18 +55,18 @@ function Cancel() {
         </div>
       
         <div class="am-u-sm-12 am-u-md-8 am-u-md-pull-4">
-          <form action="" name="Post" class="am-form am-form-horizontal">
+          <form action="" name="Post" class="am-form am-form-horizontal" method="post">
             <div class="am-form-group">
               <label for="postsTitle" class="am-u-sm-3 am-form-label">标题 / Title</label>
               <div class="am-u-sm-9">
-                <input type="text" name="postsBean.postsTitle" id="postsTitle"/>
+                <input type="text" name="postsTitle" id="postsTitle"/>
               </div>
             </div>
 
             <div class="am-form-group">
               <label for="postsText" class="am-u-sm-3 am-form-label">内容 / Content</label>
               <div class="am-u-sm-9">
-                <textarea class="" rows="5" name="postsBean.postsText" id="postsText"></textarea>
+                <textarea class="" rows="5" name="postsText" id="postsText"></textarea>
               </div>
             </div>
 
@@ -93,10 +93,10 @@ function Cancel() {
 <a href="#" class="am-icon-btn am-icon-th-list am-show-sm-only admin-menu" data-am-offcanvas="{target: '#admin-offcanvas'}"></a>
 
 
-<script src="assets/js/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/jquery.min.js"></script>
 
-<script src="assets/js/amazeui.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/amazeui.min.js"></script>
 
-<script src="assets/js/app.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/app.js"></script>
 </body>
 </html>

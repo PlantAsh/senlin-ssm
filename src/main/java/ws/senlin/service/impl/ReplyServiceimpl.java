@@ -19,7 +19,7 @@ public class ReplyServiceimpl implements ReplyService {
 		// TODO Auto-generated method stub
 		try {
 			List<PostsReply> ur = null;
-//			ur = PostsReplyDAO.loadReply(postsReply);
+			ur = postsReplyDAO.loadReply(postsReply.getPostsSuper());
 			return ur;
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -30,7 +30,7 @@ public class ReplyServiceimpl implements ReplyService {
 	public String addPosts(PostsReply postsReply) throws Exception {
 		// TODO Auto-generated method stub
 		try {
-//			PostsReplyDAO.add(postsReply);
+			postsReplyDAO.addSelective(postsReply);
 			return "success";
 		} catch (Exception e) {
 			// TODO: handle exception

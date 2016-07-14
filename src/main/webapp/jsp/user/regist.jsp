@@ -46,15 +46,15 @@
     
     <form action="" name="regist" method="post" class="am-form">
       <label for="userAccount">账号:</label>
-      <input type="text" name="userAccount" id="userAccount" onBlur="checkUserAccount(this)" placeholder="请输入账号。">
+      <input type="text" name="userAccount" id="userAccount" oninput="checkUserAccount(this)" placeholder="请输入账号。">
       <SPAN id="userAccount_notice" >*</SPAN>
       <br>
       <label for="userPassword">密码:</label>
-      <input type="password" name="userPassword" id="userPassword" onBlur="checkPassword(this)" onkeyup="checkIntensity(this.value)" placeholder="请输入1-20个字符的密码。"/>
+      <input type="password" name="userPassword" id="userPassword" oninput="checkPassword(this)" onkeyup="checkIntensity(this.value)" placeholder="请输入1-20个字符的密码。"/>
       <SPAN id="userPassword_notice" >*</SPAN>
       <br>
-        <TD align=right><STRONG>密码强度:</STRONG></TD>  
-        <TD><TABLE cellSpacing=0 cellPadding=1 width=145 border=0>  
+        <TD align=right><STRONG>密码强度:</STRONG></TD>
+        <TD><TABLE cellSpacing=0 cellPadding=1 width=145 border=0>
           <TBODY>  
             <TR align=middle>  
               <TD id=pwd_lower width="33%">弱</TD>  
@@ -65,11 +65,10 @@
         </TABLE></TD>
       <br>
       <label for="userPassword2">确认密码:</label>
-      <input type="password" id="userPassword2" onBlur="checkConformPassword(this)" placeholder="请再输入一次密码。"/>
+      <input type="password" id="userPassword2" oninput="checkConformPassword(this)" placeholder="请再输入一次密码。"/>
       <SPAN id="userPassword2_notice" >*</SPAN>
       <br>
       <div class="am-cf">
-        <!-- <input type=hidden value=act_register name=act> -->
         <input type="button" onclick="ok()" value="确 认" name="regist" class="am-btn am-btn-primary am-btn-sm am-fl" style="float:left;"/>
         <input type="button" onclick="cancel()" value="取 消" class="am-btn am-btn-primary am-btn-sm am-fl"  style="float:left;margin-left:15px;"/>
       </div>

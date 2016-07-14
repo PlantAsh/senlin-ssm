@@ -13,11 +13,11 @@
   <sql id="Base_Column_List" >
     reply_id, user_account, user_name, reply_text, reply_date, reply_picture, posts_super
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="loadReply" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from posts_reply
-    where reply_id = #{replyId,jdbcType=INTEGER}
+    where posts_super = #{postsSuper,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from posts_reply
@@ -31,7 +31,7 @@
       #{replyText,jdbcType=VARCHAR}, #{replyDate,jdbcType=TIMESTAMP}, #{replyPicture,jdbcType=VARCHAR}, 
       #{postsSuper,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="ws.senlin.entity.PostsReply" >
+  <insert id="addSelective" parameterType="ws.senlin.entity.PostsReply" >
     insert into posts_reply
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="replyId != null" >

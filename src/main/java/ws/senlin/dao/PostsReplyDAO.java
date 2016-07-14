@@ -1,5 +1,7 @@
 package ws.senlin.dao;
 
+import java.util.List;
+
 import ws.senlin.entity.PostsReply;
 
 public interface PostsReplyDAO {
@@ -7,9 +9,9 @@ public interface PostsReplyDAO {
 
     int insert(PostsReply record);
 
-    int insertSelective(PostsReply record);
+    int addSelective(PostsReply record);
 
-    PostsReply selectByPrimaryKey(Integer replyId);
+    List<PostsReply> loadReply(Integer postsSuper);
 
     int updateByPrimaryKeySelective(PostsReply record);
 

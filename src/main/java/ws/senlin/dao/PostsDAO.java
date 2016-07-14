@@ -9,9 +9,13 @@ public interface PostsDAO {
 
     int insert(Posts record);
 
-    int insertSelective(Posts record);
+    int addSelective(Posts record);
 
     List<Posts> loadPosts(String postsFloor, int first, int number);
+    
+    List<Posts> getPosts(Integer postsId);
+    
+    int getPage(String postsFloor);
 
     int updateByPrimaryKeySelective(Posts record);
 

@@ -7,7 +7,7 @@ import ws.senlin.entity.Posts;
 public interface PostsService {
 	public List<Posts> loadPosts(Posts userPosts, int first, int number) throws Exception;
 	
-	public int getQuantity(Posts userPosts) throws Exception;
+	public int getPage(Posts userPosts) throws Exception;
 	
 	public String addPosts(Posts userPosts) throws Exception;
 	
