@@ -72,7 +72,7 @@
         </div>
       
         <div class="am-u-sm-12 am-u-md-8 am-u-md-pull-4">
-          <form action="" class="am-form am-form-horizontal">
+          <form class="am-form am-form-horizontal">
             <div class="am-form-group">
               <div class="am-u-sm-9">
                 <strong><font size="8"><%=usp.getPostsTitle() %></font></strong>
@@ -84,9 +84,8 @@
                 <small><font size="5"><%=usp.getPostsText() %></font></small>
               </div>
             </div>
-          </form>
-          <hr/>
-          <form action="" name="Post" method="post" class="am-form am-form-horizontal">
+            <hr/>
+          
             <%
             List ur=(List) session.getAttribute("postsReply");
             if(!ur.isEmpty()) { 
@@ -106,7 +105,9 @@
           	  }
             }
             %>
-            
+          </form>
+          
+          <form action="" name="Post" method="post" class="am-form am-form-horizontal">
             <div class="am-form-group">
               <div class="am-u-sm-9">
                 <textarea class="" rows="5" name="replyText" id="replyText"></textarea>

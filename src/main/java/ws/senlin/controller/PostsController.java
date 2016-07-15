@@ -1,11 +1,12 @@
 package ws.senlin.controller;
 
 import java.io.PrintWriter;
-import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -16,8 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.opensymphony.xwork2.ActionContext;
-
+import net.sf.json.JSONObject;
 import ws.senlin.entity.Posts;
 import ws.senlin.entity.PostsReply;
 import ws.senlin.entity.UserInformation;
@@ -26,7 +26,7 @@ import ws.senlin.service.ReplyService;
 
 @Controller
 @RequestMapping("/posts")
-@SessionAttributes({ "postsFloor", "Floor", "Posts", "postsReply", "pagenumber", "now", "userReply" })
+@SessionAttributes({ "postsFloor", "Posts", "postsReply", "userReply" })
 public class PostsController {
 
 	@Resource
@@ -40,12 +40,14 @@ public class PostsController {
 	private int pagenumber;
 	private int number;
 
-	@RequestMapping(value = "/floor")
-	public String Floor(Posts usp, ModelMap model) throws Exception {
+	@RequestMapping(value = "/floor", produces = "text/plain;charset=UTF-8")
+	public String Floor(HttpServletResponse response, String postsFloor, ModelMap model) throws Exception {
 		try {
 			first = 0;
 			number = 15;
 
+			Posts usp = new Posts();
+			usp.setPostsFloor(postsFloor);
 			List<Posts> pt = null;
 			model.addAttribute("postsFloor", usp.getPostsFloor());
 			pt = postsService.loadPosts(usp, first, number);
@@ -55,11 +57,31 @@ public class PostsController {
 			} else {
 				pagenumber = page / 15;
 			}
-
-			model.addAttribute("pagenumber", pagenumber);
-			model.addAttribute("now", first / 15 + 1);
-			model.addAttribute("Floor", pt);
-			return "posts/Floor";
+			boolean flag = false;
+			if(pt.size() > 0) {
+				flag = true;
+			}
+			
+			for(int i = 0; i<pt.size(); i++) {
+				Posts up = pt.get(i);
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				String dateString = formatter.format(up.getPostsDate());
+				up.setDate(dateString);
+			}
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+	        map.put("flag", flag);
+	        map.put("posts", pt);
+	        map.put("pagenumber", pagenumber);
+	        map.put("now", first / 15 + 1);
+	        String json = JSONObject.fromObject(map).toString();
+	        //将数据返回
+	        response.setCharacterEncoding("UTF-8");
+	        response.flushBuffer();
+	        response.getWriter().write(json);
+	        response.getWriter().flush();
+	        response.getWriter().close();
+	        return null;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -67,72 +89,138 @@ public class PostsController {
 		}
 	}
 
-	@RequestMapping(value = "nextPage")
-	public String nextPage(HttpSession session, ModelMap model) throws Exception {
+	@RequestMapping(value = "nextPage", produces = "text/plain;charset=UTF-8")
+	public String nextPage(HttpSession session, HttpServletResponse response) throws Exception {
 		try {
 			if (first >= (page - 15)) {
-				return "posts/Floor";
+				return null;
 			} else {
 				first = first + 15;
-				model.addAttribute("now", first / 15 + 1);
 				Posts usp = new Posts();
 				String postsFloor = (String) session.getAttribute("postsFloor");
 				usp.setPostsFloor(postsFloor);
-				List<Posts> up = null;
-				up = postsService.loadPosts(usp, first, number);
-				model.addAttribute("Floor", up);
-				return "posts/Floor";
+				List<Posts> pt = null;
+				pt = postsService.loadPosts(usp, first, number);
+				boolean flag = false;
+				if(pt.size() > 0) {
+					flag = true;
+				}
+				
+				for(int i = 0; i<pt.size(); i++) {
+					Posts up = pt.get(i);
+					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					String dateString = formatter.format(up.getPostsDate());
+					up.setDate(dateString);
+				}
+				
+				Map<String, Object> map = new HashMap<String, Object>();
+		        map.put("flag", flag);
+		        map.put("posts", pt);
+		        map.put("pagenumber", pagenumber);
+		        map.put("now", first / 15 + 1);
+		        String json = JSONObject.fromObject(map).toString();
+		        //将数据返回
+		        response.setCharacterEncoding("UTF-8");
+		        response.flushBuffer();
+		        response.getWriter().write(json);
+		        response.getWriter().flush();
+		        response.getWriter().close();
+		        return null;
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
-			return "posts/Floor";
+			return null;
 		}
 	}
 
-	@RequestMapping(value = "backPage")
-	public String backPage(HttpSession session, ModelMap model) throws Exception {
+	@RequestMapping(value = "backPage", produces = "text/plain;charset=UTF-8")
+	public String backPage(HttpServletResponse response, HttpSession session) throws Exception {
 		try {
 			if (first == 0) {
-				return "posts/Floor";
+				return null;
 			} else {
 				first = first - 15;
-				model.addAttribute("now", first / 15 + 1);
 				Posts usp = new Posts();
 				String postsFloor = (String) session.getAttribute("postsFloor");
 				usp.setPostsFloor(postsFloor);
-				List<Posts> up = null;
-				up = postsService.loadPosts(usp, first, number);
-				model.addAttribute("Floor", up);
-				return "posts/Floor";
+				List<Posts> pt = null;
+				pt = postsService.loadPosts(usp, first, number);
+				boolean flag = false;
+				if(pt.size() > 0) {
+					flag = true;
+				}
+				
+				for(int i = 0; i<pt.size(); i++) {
+					Posts up = pt.get(i);
+					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					String dateString = formatter.format(up.getPostsDate());
+					up.setDate(dateString);
+				}
+				
+				Map<String, Object> map = new HashMap<String, Object>();
+		        map.put("flag", flag);
+		        map.put("posts", pt);
+		        map.put("pagenumber", pagenumber);
+		        map.put("now", first / 15 + 1);
+		        String json = JSONObject.fromObject(map).toString();
+		        //将数据返回
+		        response.setCharacterEncoding("UTF-8");
+		        response.flushBuffer();
+		        response.getWriter().write(json);
+		        response.getWriter().flush();
+		        response.getWriter().close();
+		        return null;
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
-			return "posts/Floor";
+			return null;
 		}
 	}
 
-	@RequestMapping(value = "somePage")
-	public String somePage(@RequestParam(value = "somePage")int somePage, HttpSession session, ModelMap model) throws Exception {
+	@RequestMapping(value = "somePage", produces = "text/plain;charset=UTF-8")
+	public String somePage(HttpServletResponse response, @RequestParam(value = "somePage")int somePage, HttpSession session) throws Exception {
 		try {
 			first = (somePage - 1) * 15;
 			Posts usp = new Posts();
 			String postsFloor = (String) session.getAttribute("postsFloor");
 			usp.setPostsFloor(postsFloor);
-			List<Posts> up = null;
-			up = postsService.loadPosts(usp, first, number);
-			model.addAttribute("now", first / 15 + 1);
-			model.addAttribute("Floor", up);
-			return "posts/Floor";
+			List<Posts> pt = null;
+			pt = postsService.loadPosts(usp, first, number);
+			boolean flag = false;
+			if(pt.size() > 0) {
+				flag = true;
+			}
+			
+			for(int i = 0; i<pt.size(); i++) {
+				Posts up = pt.get(i);
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				String dateString = formatter.format(up.getPostsDate());
+				up.setDate(dateString);
+			}
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+	        map.put("flag", flag);
+	        map.put("posts", pt);
+	        map.put("pagenumber", pagenumber);
+	        map.put("now", first / 15 + 1);
+	        String json = JSONObject.fromObject(map).toString();
+	        //将数据返回
+	        response.setCharacterEncoding("UTF-8");
+	        response.flushBuffer();
+	        response.getWriter().write(json);
+	        response.getWriter().flush();
+	        response.getWriter().close();
+	        return null;
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
-			return "posts/Floor";
+			return null;
 		}
 	}
 
-	@RequestMapping(value = "/addPosts", method = RequestMethod.POST)
+	@RequestMapping(value = "/addPosts", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
 	public String addPosts(HttpSession session, ModelMap model, HttpServletResponse response, Posts posts)
 			throws Exception {
 		response.setContentType("text/html;charset=UTF-8");
@@ -151,22 +239,9 @@ public class PostsController {
 
 			String p = postsService.addPosts(posts);
 			if (p.equals("success")) {
-				first = 0;
-				List<Posts> up = null;
-				up = postsService.loadPosts(posts, first, number);
-				page = postsService.getPage(posts);
-				if (page % 15 > 0) {
-					pagenumber = page / 15 + 1;
-				} else {
-					pagenumber = page / 15;
-				}
-
-				model.addAttribute("pagenumber", pagenumber);
-				model.addAttribute("now", first / 15 + 1);
-				model.addAttribute("Floor", up);
 				return "posts/Floor";
 			} else {
-				out.print("<script>alert('" + ActionContext.getContext().getSession().get("error") + "')</script>");
+				out.print("<script>alert('error!')</script>");
 				out.flush();
 				return "posts/Posts";
 			}
@@ -177,7 +252,7 @@ public class PostsController {
 		}
 	}
 
-	@RequestMapping(value = "/getPosts")
+	@RequestMapping(value = "/getPosts", produces = "text/plain;charset=UTF-8")
 	public String getPosts(HttpServletResponse response, Posts usp, ModelMap model) throws Exception {
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
@@ -207,7 +282,7 @@ public class PostsController {
 		}
 	}
 
-	@RequestMapping(value = "/replyPosts", method = RequestMethod.POST)
+	@RequestMapping(value = "/replyPosts", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
 	public String replyPosts(HttpSession session, HttpServletResponse response, ModelMap model, @RequestParam(value = "replyText")String text) throws Exception {
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");

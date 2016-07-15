@@ -18,6 +18,8 @@ public class Posts {
     private String postsFloor;
 
     private String postsPicture;
+    
+    private String date;//作为postsDate的替换属性
 
     public Integer getPostsId() {
         return postsId;
@@ -81,5 +83,13 @@ public class Posts {
 
     public void setPostsPicture(String postsPicture) {
         this.postsPicture = postsPicture == null ? null : postsPicture.trim();
+    }
+    
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date == null ? null : date.trim();
     }
 }

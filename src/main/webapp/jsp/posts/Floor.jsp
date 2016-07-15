@@ -22,15 +22,17 @@
 	href="${pageContext.request.contextPath}/assets/css/amazeui.min.css" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/assets/css/admin.css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.3.min.js" ></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/PostsPage.js" ></script>
 </head>
 
-<script type="text/javascript">
-	function post() {
-		posts.action = "${pageContext.request.contextPath}/jsp/posts/Posts.jsp";
-		document.posts.submit();
-	}
-</script>
-<body>
+<%
+if(request.getParameter("postsFloor") != null) {
+	session.setAttribute("postsFloor", request.getParameter("postsFloor"));
+}
+%>
+<body onload="floor('<%=session.getAttribute("postsFloor") %>')"/>
+	
 	<%@ include file="../frame/Frame_top.jsp"%>
 
 	<div class="am-cf admin-main">
@@ -65,84 +67,16 @@
 										<th class="table-date am-hide-sm-only">发布时间</th>
 									</tr>
 								</thead>
-
-								<%
-									List up = (List) session.getAttribute("Floor");
-									if (up.isEmpty()) {
-								%>
-								<tbody>
-									<tr>
-										<td class="am-hide-sm-only">你将是第一个</td>
-										<td class="am-hide-sm-only">你将是第一个</td>
-										<td class="am-hide-sm-only">你将是第一个</td>
-									</tr>
+								
+								<tbody id="posts">
+								
 								</tbody>
-								<%
-									} else {
-										for (int i = 0; i < up.size(); i++) {
-											Posts usp = (Posts) up.get(i);
-								%>
-								<tbody>
-									<tr>
-										<td><a
-											href="${pageContext.request.contextPath}/posts/getPosts?postsId=<%=usp.getPostsId() %>"><%=usp.getPostsTitle()%></a></td>
-										<td class="am-hide-sm-only"><%=usp.getUserName()%></td>
-										<td class="am-hide-sm-only"><%=usp.getPostsDate()%></td>
-									</tr>
-								</tbody>
-								<%
-									}
-									}
-								%>
 							</table>
 							
 							<div class="am-cf">
 								<div class="am-fr">
-									<ul class="am-pagination">
-										<%
-											int pagenumber = Integer.parseInt(session.getAttribute("pagenumber").toString());
-											int now = Integer.parseInt(session.getAttribute("now").toString());
-											if(now == 1) {
-										%>
-										<li class="am-disabled"><a href="${pageContext.request.contextPath}/posts/backPage">«</a></li>
-										<%	
-											} else {
-										%>
-										<li><a href="${pageContext.request.contextPath}/posts/backPage">«</a></li>
-										<%
-											}
-											int a = 1;
-											if(pagenumber > 5 & now > 2) {
-												if(pagenumber - now >= 2) {
-													a = now - 2;
-													pagenumber = now + 2;
-												} else {
-													a = pagenumber - 4;
-												}
-											} else if(pagenumber > 5) {
-												pagenumber = 5;
-											}
-											for (int i = a; i <= pagenumber; i++) {
-												if (i == now) {
-										%>
-										<li class="am-active"><a href="${pageContext.request.contextPath}/posts/somePage?somePage=<%=i %>"><%=i %></a></li>
-										<%
-												} else {
-										%>
-										<li><a href="${pageContext.request.contextPath}/posts/somePage?somePage=<%=i %>"><%=i %></a></li>
-										<%
-												}
-											}
-											if(now == pagenumber) {
-										%>
-										<li class="am-disabled"><a href="${pageContext.request.contextPath}/posts/nextPage">»</a></li>
-										<%
-											} else {
-										%>
-										<li><a href="${pageContext.request.contextPath}/posts/nextPage">»</a></li>
-										<%
-											}
-										%>
+									<ul id="page" class="am-pagination">
+										
 									</ul>
 								</div>
 							</div>

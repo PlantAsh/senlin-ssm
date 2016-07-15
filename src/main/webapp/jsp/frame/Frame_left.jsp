@@ -13,9 +13,9 @@
         <li class="admin-parent">
           <a class="am-cf" data-am-collapse="{target: '#collapse-nav'}"><span class="am-icon-file"></span> 页面模块 <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
           <ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav">
-            <li><a href="${pageContext.request.contextPath}/posts/floor?postsFloor=明德"><span class="am-icon-th"></span> 明德</a></li>
-            <li><a href="${pageContext.request.contextPath}/posts/floor?postsFloor=幕贤"><span class="am-icon-th"></span> 幕贤</a></li>
-            <li><a href="${pageContext.request.contextPath}/posts/floor?postsFloor=尚雅"><span class="am-icon-th"></span> 尚雅</a></li>
+            <li><a href="${pageContext.request.contextPath}/jsp/posts/Floor.jsp?postsFloor=明德"><span class="am-icon-th"></span> 明德</a></li>
+            <li><a href="${pageContext.request.contextPath}/jsp/posts/Floor.jsp?postsFloor=幕贤"><span class="am-icon-th"></span> 幕贤</a></li>
+            <li><a href="${pageContext.request.contextPath}/jsp/posts/Floor.jsp?postsFloor=尚雅"><span class="am-icon-th"></span> 尚雅</a></li>
           </ul>
         </li>
       </ul>
