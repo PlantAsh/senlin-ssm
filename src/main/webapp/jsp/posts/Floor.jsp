@@ -23,7 +23,7 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/assets/css/admin.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.3.min.js" ></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/PostsPage.js" ></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/Floor.js" ></script>
 </head>
 
 <%
@@ -60,12 +60,8 @@ if(request.getParameter("postsFloor") != null) {
 						<form class="am-form">
 							<table
 								class="am-table am-table-striped am-table-hover table-main">
-								<thead>
-									<tr>
-										<th class="table-title">标题</th>
-										<th class="table-author am-hide-sm-only">作者</th>
-										<th class="table-date am-hide-sm-only">发布时间</th>
-									</tr>
+								<thead id="title">
+								
 								</thead>
 								
 								<tbody id="posts">

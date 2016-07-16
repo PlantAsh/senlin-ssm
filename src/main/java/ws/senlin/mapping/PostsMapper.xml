@@ -35,7 +35,7 @@
     from posts
     where posts_floor = #{postsFloor,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deletePosts" parameterType="java.lang.Integer" >
     delete from posts
     where posts_id = #{postsId,jdbcType=INTEGER}
   </delete>
@@ -102,32 +102,14 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="ws.senlin.entity.Posts" >
+  <update id="updatePostsSelective" parameterType="ws.senlin.entity.Posts" >
     update posts
     <set >
-      <if test="userAccount != null" >
-        user_account = #{userAccount,jdbcType=VARCHAR},
-      </if>
       <if test="userName != null" >
         user_name = #{userName,jdbcType=VARCHAR},
       </if>
-      <if test="postsTitle != null" >
-        posts_title = #{postsTitle,jdbcType=VARCHAR},
-      </if>
-      <if test="postsText != null" >
-        posts_text = #{postsText,jdbcType=VARCHAR},
-      </if>
-      <if test="postsDate != null" >
-        posts_date = #{postsDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="postsFloor != null" >
-        posts_floor = #{postsFloor,jdbcType=VARCHAR},
-      </if>
-      <if test="postsPicture != null" >
-        posts_picture = #{postsPicture,jdbcType=VARCHAR},
-      </if>
     </set>
-    where posts_id = #{postsId,jdbcType=INTEGER}
+    where user_account = #{userAccount,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="ws.senlin.entity.Posts" >
     update posts

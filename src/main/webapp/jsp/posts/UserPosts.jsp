@@ -62,7 +62,7 @@
       </form>
       
       <div class="am-cf am-padding am-padding-bottom-0">
-        <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg"><%=usp.getUserName() %></strong> <small>于<%=usp.getPostsDate() %>发帖</small></div>
+        <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg"><%=usp.getUserName() %>(<%=usp.getUserAccount() %>)</strong> <small>于<%=usp.getPostsDate() %>发帖</small></div>
       </div>
       
       <hr/>
@@ -93,7 +93,7 @@
           		  PostsReply ur2 = (PostsReply) ur.get(i);
             %>
             <div class="am-cf am-padding am-padding-bottom-0">
-              <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg"><%=ur2.getUserName() %></strong> <small>于<%=ur2.getReplyDate() %>回复</small></div>
+              <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg"><%=ur2.getUserName() %>(<%=ur2.getUserAccount() %>)</strong> <small>于<%=ur2.getReplyDate() %>回复</small></div>
             </div>
             <div class="am-form-group">
               <div class="am-u-sm-9">

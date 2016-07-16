@@ -2,6 +2,7 @@ package ws.senlin.controller;
 
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,9 +40,10 @@ public class PostsController {
 	private int page;
 	private int pagenumber;
 	private int number;
+	private String level;
 
 	@RequestMapping(value = "/floor", produces = "text/plain;charset=UTF-8")
-	public String Floor(HttpServletResponse response, String postsFloor, ModelMap model) throws Exception {
+	public String Floor(HttpSession session, HttpServletResponse response, String postsFloor, ModelMap model) throws Exception {
 		try {
 			first = 0;
 			number = 15;
@@ -69,11 +71,13 @@ public class PostsController {
 				up.setDate(dateString);
 			}
 			
+			level = (String) session.getAttribute("userLevel");
 			Map<String, Object> map = new HashMap<String, Object>();
 	        map.put("flag", flag);
 	        map.put("posts", pt);
 	        map.put("pagenumber", pagenumber);
 	        map.put("now", first / 15 + 1);
+	        map.put("level", level);
 	        String json = JSONObject.fromObject(map).toString();
 	        //将数据返回
 	        response.setCharacterEncoding("UTF-8");
@@ -85,7 +89,7 @@ public class PostsController {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return "user/user_level1";
+			return null;
 		}
 	}
 
@@ -118,6 +122,7 @@ public class PostsController {
 		        map.put("posts", pt);
 		        map.put("pagenumber", pagenumber);
 		        map.put("now", first / 15 + 1);
+		        map.put("level", level);
 		        String json = JSONObject.fromObject(map).toString();
 		        //将数据返回
 		        response.setCharacterEncoding("UTF-8");
@@ -163,6 +168,7 @@ public class PostsController {
 		        map.put("posts", pt);
 		        map.put("pagenumber", pagenumber);
 		        map.put("now", first / 15 + 1);
+		        map.put("level", level);
 		        String json = JSONObject.fromObject(map).toString();
 		        //将数据返回
 		        response.setCharacterEncoding("UTF-8");
@@ -205,6 +211,7 @@ public class PostsController {
 	        map.put("posts", pt);
 	        map.put("pagenumber", pagenumber);
 	        map.put("now", first / 15 + 1);
+	        map.put("level", level);
 	        String json = JSONObject.fromObject(map).toString();
 	        //将数据返回
 	        response.setCharacterEncoding("UTF-8");
@@ -213,6 +220,65 @@ public class PostsController {
 	        response.getWriter().flush();
 	        response.getWriter().close();
 	        return null;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	@RequestMapping(value = "/deletePosts", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+	public String deletePosts(HttpSession session, ModelMap model, HttpServletResponse response, @RequestParam(value = "postsId")int postsId)
+			throws Exception {
+		response.setContentType("text/html;charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		PrintWriter out = response.getWriter();
+
+		try {
+			String p = postsService.deletePosts(postsId);
+			if (p.equals("success")) {
+				Posts usp = new Posts();
+				String postsFloor = (String) session.getAttribute("postsFloor");
+				usp.setPostsFloor(postsFloor);
+				List<Posts> pt = null;
+				pt = postsService.loadPosts(usp, first, number);
+				page = postsService.getPage(usp);
+				if (page % 15 > 0) {
+					pagenumber = page / 15 + 1;
+				} else {
+					pagenumber = page / 15;
+				}
+				boolean flag = false;
+				if(pt.size() > 0) {
+					flag = true;
+				}
+				
+				for(int i = 0; i<pt.size(); i++) {
+					Posts up = pt.get(i);
+					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					String dateString = formatter.format(up.getPostsDate());
+					up.setDate(dateString);
+				}
+				
+				Map<String, Object> map = new HashMap<String, Object>();
+		        map.put("flag", flag);
+		        map.put("posts", pt);
+		        map.put("pagenumber", pagenumber);
+		        map.put("now", first / 15 + 1);
+		        map.put("level", level);
+		        String json = JSONObject.fromObject(map).toString();
+		        //将数据返回
+		        response.setCharacterEncoding("UTF-8");
+		        response.flushBuffer();
+		        response.getWriter().write(json);
+		        response.getWriter().flush();
+		        response.getWriter().close();
+		        return null;
+			} else {
+				out.print("<script>alert('error!')</script>");
+				out.flush();
+				return null;
+			}
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -233,6 +299,8 @@ public class PostsController {
 			UserInformation usin = (UserInformation) session.getAttribute("userInformation");
 			posts.setUserAccount(usin.getUserAccount());
 			posts.setUserName(usin.getUserName());
+			Date date=new Date();
+			posts.setPostsDate(date);
 			String text = posts.getPostsText();
 			text = text.replace("\r\n", "<br/>");
 			posts.setPostsText(text);

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import ws.senlin.dao.PostsDAO;
 import ws.senlin.entity.Posts;
+import ws.senlin.entity.UserInformation;
 import ws.senlin.service.PostsService;
 
 @Service("postsService")
@@ -64,6 +65,31 @@ public class PostsServiceimpl implements PostsService {
 			return up;
 		} catch (Exception e) {
 			// TODO: handle exception
+			throw e;
+		}
+	}
+
+	public String deletePosts(Integer postsId) throws Exception {
+		// TODO Auto-generated method stub
+		try {
+			postsDAO.deletePosts(postsId);
+			return "success";
+		} catch (Exception e) {
+			// TODO: handle exception
+			throw e;
+		}
+	}
+
+	public String updatePosts(Posts userPosts) throws Exception {
+		// TODO Auto-generated method stub
+		try {
+			int i = postsDAO.updatePostsSelective(userPosts);
+			if(i == 0) {
+				return "数据库错误";
+			}
+			return "success";
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			throw e;
 		}
 	}

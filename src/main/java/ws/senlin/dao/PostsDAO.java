@@ -5,7 +5,7 @@ import java.util.List;
 import ws.senlin.entity.Posts;
 
 public interface PostsDAO {
-    int deleteByPrimaryKey(Integer postsId);
+    int deletePosts(Integer postsId);
 
     int insert(Posts record);
 
@@ -17,7 +17,7 @@ public interface PostsDAO {
     
     int getPage(String postsFloor);
 
-    int updateByPrimaryKeySelective(Posts record);
+    int updatePostsSelective(Posts record);
 
     int updateByPrimaryKey(Posts record);
 }

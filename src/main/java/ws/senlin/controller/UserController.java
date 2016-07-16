@@ -1,8 +1,10 @@
 package ws.senlin.controller;
 
 import java.io.PrintWriter;
+import java.util.Enumeration;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
@@ -18,7 +20,7 @@ import ws.senlin.service.UserService;
 
 @Controller
 @RequestMapping("/user")
-@SessionAttributes({"UserAccount","userInformation"})
+@SessionAttributes({"UserAccount","userInformation","userLevel"})
 public class UserController {
 	@Resource
 	private UserService userService;
@@ -49,6 +51,7 @@ public class UserController {
 				usin.setUserAccount(us.getUserAccount());
 				UserInformation usin2 = informationService.loadInformation(usin);
 				model.addAttribute("userInformation", usin2);
+				model.addAttribute("userLevel", level);
 				return "user/" + level;
 			}
 		} catch (Exception e) {
@@ -83,11 +86,12 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/cancel")
-	public String Cancel(ModelMap mode) throws Exception {
+	public String Cancel(HttpServletRequest request) throws Exception {
 		try {
-			mode.clear();
-//			model.addAttribute("UserAccount");
-//			model.addAttribute("userInformation");
+			 Enumeration em = request.getSession().getAttributeNames();
+			 while(em.hasMoreElements()){   
+				 request.getSession().removeAttribute(em.nextElement().toString());				  
+			 }
 			return "user/login";
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

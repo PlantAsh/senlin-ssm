@@ -8,10 +8,10 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -21,13 +21,16 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import ws.senlin.entity.InformationCode;
 import ws.senlin.entity.UserInformation;
 import ws.senlin.service.InformationService;
+import ws.senlin.service.PostsService;
 
 @Controller
 @RequestMapping("/information")
-@SessionAttributes({ "inFloor", "inMajor", "userInformation", "UserAccount" })
+@SessionAttributes({ "inFloor", "inMajor", "userInformation", "UserAccount", "userLevel"})
 public class InformationController {
 	@Resource
 	private InformationService informationService;
+	@Resource
+	private PostsService postsService;
 
 	@RequestMapping(value = "/userinfo")
 	public String Load(ModelMap model) throws Exception {
@@ -48,13 +51,14 @@ public class InformationController {
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public String updateInformation(@ModelAttribute("UserAccount") String userAccount, ModelMap model,
+	public String updateInformation(HttpSession session, ModelMap model,
 			HttpServletResponse response, HttpServletRequest request, UserInformation usin) throws Exception {
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out = response.getWriter();
 
 		try {
+			String userAccount = (String) session.getAttribute("UserAccount");
 			// 转型为MultipartHttpRequest(重点的所在)
 			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 			// 获得第1张图片（根据前台的name名称得到上传的文件）
@@ -76,7 +80,8 @@ public class InformationController {
 				return "user/information";
 			}
 			model.addAttribute("userInformation", usin);
-			return "user/user_level1";
+			String level = (String) session.getAttribute("userLevel");
+			return "user/" + level;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

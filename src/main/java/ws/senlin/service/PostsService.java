@@ -11,6 +11,8 @@ public interface PostsService {
 	
 	public String addPosts(Posts userPosts) throws Exception;
 	
+	public String deletePosts(Integer postsId) throws Exception;
+	
 	public Posts getPosts(Posts userPosts) throws Exception;
 
 }
