@@ -37,12 +37,15 @@
           <% 
           String image = null;
           if(usin.getUserPicture() == null) {
-        	  image = "http://s.amazeui.org/media/i/demos/bw-2014-06-19.jpg?imageView/1/w/200/h/200/q/80";
+          %>
+        	  <img src="http://s.amazeui.org/media/i/demos/bw-2014-06-19.jpg?imageView/1/w/200/h/200/q/80" class="am-img-thumbnail am-circle" height="300" width="300"/>
+          <%
           } else {
-        	  image = usin.getUserPicture();
+          %>
+        	  <img src="${pageContext.request.contextPath}/<%=usin.getUserPicture() %>" class="am-img-thumbnail am-circle" height="300" width="300"/>
+          <%
           }
           %>
-          <img src="${pageContext.request.contextPath}/<%=image %>" class="am-img-thumbnail am-circle" height="300" width="300"/>
           </div>
           <div class="am-intro-right am-u-sm-7">
           <h2><%=usin.getUserName() %></h2>

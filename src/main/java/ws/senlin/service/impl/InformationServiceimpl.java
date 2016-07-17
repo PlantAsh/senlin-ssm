@@ -57,7 +57,7 @@ public class InformationServiceimpl implements InformationService {
 			pt.setUserName(usin.getUserName());
 			int i = userInformationDAO.updateInformationSelective(usin);
 			int a = postsDAO.updatePostsSelective(pt);
-			if(i == 0 | a == 0) {
+			if(i == 0) {
 				return "数据库错误";
 			}
 			return "success";
